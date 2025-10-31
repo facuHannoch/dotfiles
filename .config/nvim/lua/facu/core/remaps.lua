@@ -8,6 +8,9 @@ keymap.set("n", "<leader>nb", ":NvimTreeToggle<CR>", { desc = "Toggle file explo
 local builtin = require("telescope.builtin")
 
 vim.keymap.set("n", "<leader>nff", builtin.find_files, { desc = "Find files" })
+vim.keymap.set("n", "<leader>nfF", function()
+	builtin.find_files({ hidden = true })
+end, { desc = "Find hidden files" })
 vim.keymap.set("n", "<leader>nfg", builtin.live_grep, { desc = "Live grep" })
 vim.keymap.set("n", "<leader>nfb", builtin.buffers, { desc = "Find buffers" })
 vim.keymap.set("n", "<leader>nfh", builtin.help_tags, { desc = "Help tags" })
@@ -22,6 +25,13 @@ keymap.set("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format file" })
 keymap.set("n", "<leader>cc", function()
 	require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment" })
+keymap.set("n", "<leader>cw", function()
+	vim.opt.wrap = not vim.wo.wrap
+end, { desc = "Toggle line wrap" })
+
+-- AI
+keymap.set("n", "<leader>acp", "<cmd>CopilotChat<CR>", { desc = "CopilotChat" })
+
 
 keymap.set(
 	"v",
@@ -80,8 +90,6 @@ map("n", "<A-z>", "<C-r>", opts) -- Alt+Z for redo
 
 vim.keymap.set("n", "<C-A-z>", "<Cmd>stop<CR>", opts)
 -- (`:stop` in Vim/Neovim is equivalent to suspending itself.)
-
-
 
 --
 --

@@ -195,6 +195,12 @@ require("lazy").setup({
 				bold_vert_split = false,
 				dim_nc_background = true,
 				extend_background_behind_borders = true,
+				styles = {
+					italic = true, -- enables italics globally
+				},
+				highlight_groups = {
+					Comment = { italic = true }, -- ensure comments are italic
+				},
 			})
 
 			vim.cmd("colorscheme rose-pine")
@@ -220,7 +226,7 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
-				theme = "tokyonight", -- match your colorscheme (tokyonight, rose-pine, catppuccin, gruvbox, dracula, etc)
+				theme = "auto", -- match your colorscheme (tokyonight, rose-pine, catppuccin, gruvbox, dracula, etc)
 				section_separators = "",
 				component_separators = "",
 			},
