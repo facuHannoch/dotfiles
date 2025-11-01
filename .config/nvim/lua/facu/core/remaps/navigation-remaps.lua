@@ -1,5 +1,7 @@
 -- TODO: rename wx to wq ??
 
+local utils = require("facu.core.utils")
+
 -- Navigation
 -- keymap.set("n", "<leader>nv", vim.cmd.Ex, { desc = "Open Explorer" })
 vim.keymap.set("n", "<leader>nv", "<cmd>Oil<CR>", { desc = "Open current directory" })
@@ -20,7 +22,7 @@ vim.keymap.set("n", "<leader>nfh", builtin.help_tags, { desc = "Help tags" })
 --
 -- lua/facu/core/layout-remaps.lua
 local keymap = vim.keymap.set
-local builtin = require("telescope.builtin")
+local builtin = require("telescope.builtin") 
 
 -- 1️⃣ NAVIGATION (leader>n)
 -- Windows
@@ -29,6 +31,13 @@ keymap("n", "<leader>nwj", "<C-w>j", { desc = "Move to lower window" })
 keymap("n", "<leader>nwk", "<C-w>k", { desc = "Move to upper window" })
 keymap("n", "<leader>nwl", "<C-w>l", { desc = "Move to right window" })
 keymap("n", "<leader>nwa", "<C-w>p", { desc = "Alternate window" })
+keymap("n", "<leader>nwA", function()
+	-- go to alternate window
+	vim.cmd("wincmd p")
+
+	utils.toggle_zoom()
+end, { desc = "Toggle window zoom" })
+-- terminal related functionlity found in ./terminal-remaps.lua
 
 -- Buffers
 keymap("n", "<leader>nbn", ":bnext<CR>", { desc = "Next buffer" })
@@ -61,17 +70,7 @@ keymap("n", "<leader>wfh", "<cmd>wincmd f<CR>", { desc = "Open file under cursor
 keymap("n", "<leader>wx", ":close<CR>", { desc = "Close window" })
 keymap("n", "<leader>w=", ":wincmd =<CR>", { desc = "Equalize windows" })
 -- keymap("n", "<leader>wz", "<cmd>wincmd _ | wincmd |<CR>", { desc = "Zoom window" })
-keymap("n", "<leader>wz", function()
-	local is_zoomed = vim.w._zoomed
-
-	if is_zoomed then
-		vim.cmd("wincmd =")
-		vim.w._zoomed = false
-	else
-		vim.cmd("wincmd _ | wincmd |")
-		vim.w._zoomed = true
-	end
-end, { desc = "Toggle window zoom" })
+keymap("n", "<leader>wz", utils.toggle_zoom, { desc = "Toggle window zoom" })
 keymap("n", "<leader>wo", ":only<CR>", { desc = "Keep only current window" })
 
 --

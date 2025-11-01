@@ -2,7 +2,7 @@ require("facu.core.remaps.ai-remaps")
 require("facu.core.remaps.code-remaps")
 require("facu.core.remaps.navigation-remaps")
 require("facu.core.remaps.ui-remaps")
-
+require("facu.core.remaps.terminal-remaps")
 
 local wk = require("which-key")
 wk.add({
