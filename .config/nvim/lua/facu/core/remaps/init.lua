@@ -1,44 +1,8 @@
-local keymap = vim.keymap
+require("facu.core.remaps.ai-remaps")
+require("facu.core.remaps.code-remaps")
+require("facu.core.remaps.navigation-remaps")
+require("facu.core.remaps.ui-remaps")
 
--- Navigation
--- keymap.set("n", "<leader>nv", vim.cmd.Ex, { desc = "Open Explorer" })
-vim.keymap.set("n", "<leader>nv", "<cmd>Oil<CR>", { desc = "Open current directory" })
-keymap.set("n", "<leader>nb", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
-
-local builtin = require("telescope.builtin")
-
-vim.keymap.set("n", "<leader>nff", builtin.find_files, { desc = "Find files" })
-vim.keymap.set("n", "<leader>nfF", function()
-	builtin.find_files({ hidden = true })
-end, { desc = "Find hidden files" })
-vim.keymap.set("n", "<leader>nfg", builtin.live_grep, { desc = "Live grep" })
-vim.keymap.set("n", "<leader>nfb", builtin.buffers, { desc = "Find buffers" })
-vim.keymap.set("n", "<leader>nfh", builtin.help_tags, { desc = "Help tags" })
-
--- UI
-vim.keymap.set("n", "<leader>un", function()
-	vim.opt.relativenumber = not vim.wo.relativenumber
-end, { desc = "Toggle relative line numbers" })
-
--- Code
-keymap.set("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format file" })
-keymap.set("n", "<leader>cc", function()
-	require("Comment.api").toggle.linewise.current()
-end, { desc = "Toggle comment" })
-keymap.set("n", "<leader>cw", function()
-	vim.opt.wrap = not vim.wo.wrap
-end, { desc = "Toggle line wrap" })
-
--- AI
-keymap.set("n", "<leader>acp", "<cmd>CopilotChat<CR>", { desc = "CopilotChat" })
-
-
-keymap.set(
-	"v",
-	"<leader>cc",
-	"<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-	{ desc = "Toggle comment (visual)" }
-)
 
 local wk = require("which-key")
 wk.add({
@@ -51,18 +15,18 @@ wk.add({
 --
 -- ==== Copy / Paste Functionality ==== --
 
--- 📋 Clipboard keymaps (cross-mode, WSL/macOS/Linux compatible)
+-- ­ƒôï Clipboard keymaps (cross-mode, WSL/macOS/Linux compatible)
 -- Assumes system clipboard provider is working
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- ⛳ Leader-based versions (for consistency and fallback)
+-- Ôø│ Leader-based versions (for consistency and fallback)
 map({ "n", "v" }, "<leader>uc", '"+y', opts) -- Copy
 map({ "n", "v" }, "<leader>ux", '"+d', opts) -- Cut
 map({ "n", "v" }, "<leader>uv", '"+p', opts) -- Paste
 
--- 🧠 Ctrl-based mappings — consistent across modes
+-- ­ƒºá Ctrl-based mappings ÔÇö consistent across modes
 -- Normal / Visual: direct operation
 map({ "n", "v" }, "<C-c>", '"+y', opts)
 map({ "n", "v" }, "<C-x>", '"+d', opts)
