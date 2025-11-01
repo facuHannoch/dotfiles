@@ -3,7 +3,6 @@
 -- Navigation
 -- keymap.set("n", "<leader>nv", vim.cmd.Ex, { desc = "Open Explorer" })
 vim.keymap.set("n", "<leader>nv", "<cmd>Oil<CR>", { desc = "Open current directory" })
-vim.keymap.set("n", "<leader>nb", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 
 local builtin = require("telescope.builtin")
 
@@ -52,11 +51,27 @@ keymap("n", "<leader>wh", ":split<CR>", { desc = "Horizontal split" })
 -- Split + new buffer
 keymap("n", "<leader>wV", ":vsplit | enew<CR>", { desc = "Vertical split with new buffer" })
 keymap("n", "<leader>wH", ":split | enew<CR>", { desc = "Horizontal split with new buffer" })
+
+-- Split + open file under cursor
+keymap("n", "<leader>wfv", "<cmd>vertical wincmd f<CR>", { desc = "Open file under cursor in vertical split" })
+keymap("n", "<leader>wfh", "<cmd>wincmd f<CR>", { desc = "Open file under cursor in horizontal split" })
+
 --
 -- Window management
 keymap("n", "<leader>wx", ":close<CR>", { desc = "Close window" })
 keymap("n", "<leader>w=", ":wincmd =<CR>", { desc = "Equalize windows" })
-keymap("n", "<leader>wz", "<cmd>wincmd _ | wincmd |<CR>", { desc = "Zoom window" })
+-- keymap("n", "<leader>wz", "<cmd>wincmd _ | wincmd |<CR>", { desc = "Zoom window" })
+keymap("n", "<leader>wz", function()
+	local is_zoomed = vim.w._zoomed
+
+	if is_zoomed then
+		vim.cmd("wincmd =")
+		vim.w._zoomed = false
+	else
+		vim.cmd("wincmd _ | wincmd |")
+		vim.w._zoomed = true
+	end
+end, { desc = "Toggle window zoom" })
 keymap("n", "<leader>wo", ":only<CR>", { desc = "Keep only current window" })
 
 --

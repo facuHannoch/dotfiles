@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>cw", function()
 	vim.opt.wrap = not vim.wo.wrap
 end, { desc = "Toggle line wrap" })
 
-keymap.set(
+vim.keymap.set(
 	"v",
 	"<leader>cc",
 	"<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
