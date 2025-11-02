@@ -229,6 +229,52 @@ require("lazy").setup({
 				theme = "auto", -- match your colorscheme (tokyonight, rose-pine, catppuccin, gruvbox, dracula, etc)
 				section_separators = "",
 				component_separators = "",
+				icons_enabled = true,
+			},
+			sections = {
+				lualine_a = {
+					{
+						function()
+							local mode = vim.fn.mode()
+							local mode_map = {
+								n = "NORMAL",
+								i = "INSERT",
+								v = "VISUAL",
+								V = "V-LINE",
+								[""] = "V-BLOCK",
+								c = "COMMAND",
+								R = "REPLACE",
+								t = "TERMINAL",
+							}
+
+							local mode_name = mode_map[mode] or "UNKNOWN"
+							local icon = ""
+
+							-- Only add dot for terminal buffers
+							if vim.bo.buftype == "terminal" then
+								if mode ~= "t" then
+									-- vim.cmd("hi TermInsert guifg=#00ff87 guibg=NONE gui=bold")
+									-- icon = "%#TermInsert#🔵%#Normal# " -- green dot
+									icon = "🔵 "
+								end
+
+								-- if mode == "t" then
+								-- 	icon = "%#TermInsert#●%#Normal# " -- green dot
+								-- else
+								-- 	icon = "%#TermNormal#●%#Normal# " -- blue dot
+								-- end
+							end
+
+							return icon .. mode_name
+						end,
+						color = { gui = "bold" },
+					},
+				},
+				lualine_b = { "branch", "diff" },
+				lualine_c = { "filename" },
+				lualine_x = { "encoding", "fileformat", "filetype" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
 			},
 		},
 	},
