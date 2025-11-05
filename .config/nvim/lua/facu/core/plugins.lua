@@ -67,6 +67,23 @@ require("lazy").setup({
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
+		"nvim-telescope/telescope-ui-select.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("telescope").setup({
+				extensions = {
+					["ui-select"] = {
+						require("telescope.themes").get_dropdown({
+							previewer = false,
+							initial_mode = "insert",
+						}),
+					},
+				},
+			})
+			require("telescope").load_extension("ui-select")
+		end,
+	},
+	{
 		"stevearc/oil.nvim",
 		opts = {
 			default_file_explorer = true, -- replaces netrw
@@ -182,28 +199,59 @@ require("lazy").setup({
 		end,
 	},
 	-- Style plugins
+	-- {
+	-- 	"rose-pine/neovim",
+	-- 	name = "rose-pine",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("rose-pine").setup({
+	-- 			variant = "moon", -- auto, main, moon, or dawn
+	-- 			dark_variant = "moon", -- ensures dark mode
+	-- 			disable_background = false, -- true = transparent
+	-- 			bold_vert_split = false,
+	-- 			dim_nc_background = true,
+	-- 			extend_background_behind_borders = true,
+	-- 			styles = {
+	-- 				italic = true, -- enables italics globally
+	-- 			},
+	-- 			highlight_groups = {
+	-- 				Comment = { italic = true }, -- ensure comments are italic
+	-- 			},
+	-- 		})
+	--
+	-- 		vim.cmd("colorscheme rose-pine")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"tomasiser/vim-code-dark",
+	-- 	config = function()
+	-- 		vim.cmd("colorscheme codedark")
+	-- 	end,
+	-- },
 	{
-		"rose-pine/neovim",
-		name = "rose-pine",
-		lazy = false,
+		"ellisonleao/gruvbox.nvim",
 		priority = 1000,
-		config = function()
-			require("rose-pine").setup({
-				variant = "moon", -- auto, main, moon, or dawn
-				dark_variant = "moon", -- ensures dark mode
-				disable_background = false, -- true = transparent
-				bold_vert_split = false,
-				dim_nc_background = true,
-				extend_background_behind_borders = true,
-				styles = {
-					italic = true, -- enables italics globally
-				},
-				highlight_groups = {
-					Comment = { italic = true }, -- ensure comments are italic
-				},
-			})
-
-			vim.cmd("colorscheme rose-pine")
+		lazy = false,
+		opts = {
+			terminal_colors = true,
+			undercurl = true,
+			underline = true,
+			bold = true,
+			italic = {
+				strings = true,
+				emphasis = true,
+				comments = true,
+				operators = false,
+				folds = true,
+			},
+			contrast = "soft", -- "hard", "soft", or "" (medium default)
+			transparent_mode = false,
+		},
+		config = function(_, opts)
+			require("gruvbox").setup(opts)
+			vim.o.background = "dark"
+			vim.cmd("colorscheme gruvbox")
 		end,
 	},
 	{

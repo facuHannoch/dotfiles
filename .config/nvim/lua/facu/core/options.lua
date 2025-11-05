@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect", "popup" }
+
 opt.number = true
 opt.relativenumber = true
 

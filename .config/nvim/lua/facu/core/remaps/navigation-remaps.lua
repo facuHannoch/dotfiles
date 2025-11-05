@@ -1,4 +1,4 @@
--- TODO: rename wx to wq ??
+--
 
 local utils = require("facu.core.utils")
 
@@ -10,9 +10,16 @@ local builtin = require("telescope.builtin")
 
 vim.keymap.set("n", "<leader>nff", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<leader>nfF", function()
-	builtin.find_files({ hidden = true })
+	builtin.find_files({ hidden = true, no_ignore = true })
 end, { desc = "Find hidden files" })
 vim.keymap.set("n", "<leader>nfg", builtin.live_grep, { desc = "Live grep" })
+vim.keymap.set("n", "<leader>nfG", function()
+    builtin.live_grep({ additional_args = function(args)
+        table.insert(args, "--hidden")
+        table.insert(args, "--no-ignore")
+        return args
+    end })
+end, { desc = "Live grep hidden files" })
 vim.keymap.set("n", "<leader>nfb", builtin.buffers, { desc = "Find buffers" })
 vim.keymap.set("n", "<leader>nfh", builtin.help_tags, { desc = "Help tags" })
 -- keymap("n", "<leader>nfp", builtin.git_files, { desc = "Find git files" })
@@ -22,7 +29,7 @@ vim.keymap.set("n", "<leader>nfh", builtin.help_tags, { desc = "Help tags" })
 --
 -- lua/facu/core/layout-remaps.lua
 local keymap = vim.keymap.set
-local builtin = require("telescope.builtin") 
+local builtin = require("telescope.builtin")
 
 -- 1️⃣ NAVIGATION (leader>n)
 -- Windows
@@ -32,12 +39,15 @@ keymap("n", "<leader>nwk", "<C-w>k", { desc = "Move to upper window" })
 keymap("n", "<leader>nwl", "<C-w>l", { desc = "Move to right window" })
 keymap("n", "<leader>nwa", "<C-w>p", { desc = "Alternate window" })
 keymap("n", "<leader>nwA", function()
-	-- go to alternate window
-	vim.cmd("wincmd p")
-
+	vim.cmd("wincmd p") -- go to alternate window
 	utils.toggle_zoom()
 end, { desc = "Toggle window zoom" })
 -- terminal related functionlity found in ./terminal-remaps.lua
+
+keymap("n", "<leader>wdv", function()
+	utils.file_diff("vert")
+end, { desc = "vertical diff split with file" })
+keymap("n", "<leader>wdh", utils.file_diff, { desc = "horizontal diff split with file" })
 
 -- Buffers
 keymap("n", "<leader>nbn", ":bnext<CR>", { desc = "Next buffer" })
@@ -68,6 +78,7 @@ keymap("n", "<leader>wfh", "<cmd>wincmd f<CR>", { desc = "Open file under cursor
 --
 -- Window management
 keymap("n", "<leader>wx", ":close<CR>", { desc = "Close window" })
+keymap("n", "<leader>wX", ":quit!<CR>", { desc = "Close window and buffer" })
 keymap("n", "<leader>w=", ":wincmd =<CR>", { desc = "Equalize windows" })
 -- keymap("n", "<leader>wz", "<cmd>wincmd _ | wincmd |<CR>", { desc = "Zoom window" })
 keymap("n", "<leader>wz", utils.toggle_zoom, { desc = "Toggle window zoom" })

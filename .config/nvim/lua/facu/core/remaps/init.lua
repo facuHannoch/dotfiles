@@ -29,14 +29,14 @@ map({ "n", "v" }, "<leader>uv", '"+p', opts) -- Paste
 -- ­ƒºá Ctrl-based mappings ÔÇö consistent across modes
 -- Normal / Visual: direct operation
 map({ "n", "v" }, "<C-c>", '"+y', opts)
-map({ "n", "v" }, "<C-x>", '"+d', opts)
+-- map({ "n", "v" }, "<C-x>", '"+d', opts)
 map({ "n", "v" }, "<C-v>", '"+p', opts)
-
 -- Insert mode: leave insert, paste, re-enter insert
+
 map("i", "<C-v>", '<Esc>"+pa', opts)
 -- Optional: Ctrl-c/x in insert mode copy/cut current line
 map("i", "<C-c>", '<Esc>"+yyA', opts)
-map("i", "<C-x>", '<Esc>"+ddA', opts)
+-- map("i", "<C-x>", '<Esc>"+ddA', opts)
 
 -- Custom commands
 map("n", "<leader>ur", [[:%d | 0put +<CR>]], opts)
